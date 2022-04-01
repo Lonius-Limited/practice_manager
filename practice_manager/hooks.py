@@ -178,4 +178,6 @@ user_data_fields = [
 # auth_hooks = [
 # 	"practice_manager.auth.validate"
 # ]
+# UNCOMMENT WHEN YOU WANT TO EXPORT
+# fixtures = ['Healthcare Service Unit', 'Healthcare Service Unit Type']
 
