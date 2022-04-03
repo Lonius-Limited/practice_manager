@@ -4,10 +4,6 @@ from frappe import _, msgprint
 from frappe.utils import flt, get_defaults
 from frappe.utils.data import now_datetime
 
-import lonius_health
-# CAN WE PLEASE AVOID HARD CODING ANYTHING! "Lonius Limited"
-
-
 def open_invoice_exists(customer):
 	invoices = frappe.get_list('Sales Invoice', filters={
 		'status': 'Draft',
