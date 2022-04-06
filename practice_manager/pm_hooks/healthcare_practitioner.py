@@ -11,20 +11,20 @@ def link_user_and_company(doc, state):
 	add_restrictions(doc, user, company)
 	doc.set('user_id', user.get('name'))
 	doc.save(ignore_permissions=True)
-	message = "<p>Dear <b style='color:green'>{}</b> <b style='color:green'>{}</b>, your Practice Manager account has been successfully set up. User credentials have been sent to you on your official email: <b style='color:blue'>{}</b> </p>".format(doc.get('first_name').upper(),doc.get('last_name').title(),doc.get('email_address').lower())
+	message = "<p>Practitioner account: <b style='color:green'>{}</b> <b style='color:green'>{}</b> : Practice Manager account has been successfully set up.\nUser credentials have been sent to the valid email: <b style='color:blue'>{}</b> </p>".format(doc.get('first_name').upper(),doc.get('last_name').title(),doc.get('email_address').lower())
 	frappe.msgprint(f"{message}")
 	alert_practitioner(doc,message)
 def alert_practitioner(doc, message):
 	"""send email with payment link"""
-		email_args = {
-			"recipients": doc.get("email_address"),
-			# "sender": None,
-			"subject": 'Welcome to Practice Manager!',
-			"message": message,
-			"now": True,
-			"attachments": [frappe.attach_print(self.reference_doctype, self.reference_name,
-				file_name=self.reference_name, print_format=self.print_format)]}
-		enqueue(method=frappe.sendmail, queue='short', timeout=300, is_async=True, **email_args)
+	email_args = {
+		"recipients": doc.get("email_address"),
+		# "sender": None,
+		"subject": 'Welcome to Practice Manager!',
+		"message": message,
+		"now": True,
+		"attachments": [frappe.attach_print(self.reference_doctype, self.reference_name,
+			file_name=self.reference_name, print_format=self.print_format)]}
+	enqueue(method=frappe.sendmail, queue='short', timeout=300, is_async=True, **email_args)
 def make_company(doc):
 	pc = frappe.get_all(
 		"Company",
