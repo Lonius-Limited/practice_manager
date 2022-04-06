@@ -95,13 +95,11 @@ app_license = "MIT"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-#	}
-# }
+doc_events = {
+	"Healthcare Practitioner": {
+		"after_insert": "practice_manager.pm_hooks.healthcare_practitioner.link_user_and_company",
+	}
+}
 
 # Scheduled Tasks
 # ---------------
