@@ -22,8 +22,8 @@ def alert_practitioner(doc, message):
 		"subject": 'Welcome to Practice Manager!',
 		"message": message,
 		"now": True,
-		"attachments": [frappe.attach_print(self.reference_doctype, self.reference_name,
-			file_name=self.reference_name, print_format=self.print_format)]}
+		"attachments": [frappe.attach_print(doc.reference_doctype, doc.reference_name,
+			file_name=doc.reference_name, print_format=doc.print_format)]}
 	enqueue(method=frappe.sendmail, queue='short', timeout=300, is_async=True, **email_args)
 def make_company(doc):
 	pc = frappe.get_all(
