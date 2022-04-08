@@ -1,0 +1,19 @@
+[
+ {
+  "accounts": [],
+  "credit_limits": [],
+  "customer_group_name": "Health Facility",
+  "default_price_list": null,
+  "docstatus": 0,
+  "doctype": "Customer Group",
+  "is_group": 0,
+  "modified": "2022-04-04 11:15:46.124226",
+  "name": "Health Facility",
+  "old_parent": "All Customer Groups",
+  "parent": "All Customer Groups",
+  "parent_customer_group": "All Customer Groups",
+  "parentfield": null,
+  "parenttype": null,
+  "payment_terms": null
+ }
+]

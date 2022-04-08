@@ -176,4 +176,6 @@ user_data_fields = [
 # auth_hooks = [
 # 	"practice_manager.auth.validate"
 # ]
+# UNCOMMENT WHEN YOU WANT TO EXPORT
+# fixtures = ['Customer Group', 'Industry Type', 'Customer']
 
