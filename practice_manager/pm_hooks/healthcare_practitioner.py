@@ -22,9 +22,9 @@ def alert_practitioner(doc, message):
 		"subject": 'Welcome to Practice Manager!',
 		"message": message,
 		"now": True,
-		"attachments": [frappe.attach_print(doc.reference_doctype, doc.reference_name,
-			file_name=doc.reference_name, print_format=doc.print_format)]}
-	enqueue(method=frappe.sendmail, queue='short', timeout=300, is_async=True, **email_args)
+		"attachments": [frappe.attach_print(doc.doctype, doc.name,
+			file_name=doc.name)]}
+	frappe.enqueue(method=frappe.sendmail, queue='short', timeout=300, is_async=True, **email_args)
 def make_company(doc):
 	pc = frappe.get_all(
 		"Company",
@@ -62,7 +62,22 @@ def make_and_link_user(doc):
 	user = frappe.get_doc(args)
 
 	user.append('roles',dict(role='Physician'))
-	# user.role_profile_name = 'Vendor Profile'
+	user.append('roles',dict(role='Accounts Manager'))
+	user.append('roles',dict(role='Accounts User'))
+	user.append('roles',dict(role='Dashboard Manager'))
+	user.append('roles',dict(role='Sales Master Manager'))
+	user.append('roles',dict(role='Sales Manager'))
+	user.append('roles',dict(role='Sales User'))
+	
+	#BLOCK ALL MODULES THAT THEY DON'T NEED ACCESS TO
+	from frappe.config import get_modules_from_all_apps
+	user.set('block_modules', [])
+	allowed_modules = ['Workflow', 'Desk', 'Printing', 'Healthcare', 'Practice Manager']
+	for m in get_modules_from_all_apps():
+		if m.get("module_name") not in allowed_modules:
+			self.append('block_modules', {
+				'module': m.get("module_name") 
+			})
 	user.save(ignore_permissions=True)
 	return user
 
