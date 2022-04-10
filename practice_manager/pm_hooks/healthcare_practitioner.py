@@ -11,8 +11,29 @@ def link_user_and_company(doc, state):
 	add_restrictions(doc, user, company)
 	doc.set('user_id', user.get('name'))
 	doc.save(ignore_permissions=True)
-	message = "<p>Practitioner account: <b style='color:green'>{}</b> <b style='color:green'>{}</b> : Practice Manager account has been successfully set up.\nUser credentials have been sent to the valid email: <b style='color:blue'>{}</b> </p>".format(doc.get('first_name').upper(),doc.get('last_name').title(),doc.get('email_address').lower())
-	frappe.msgprint(f"{message}")
+	message ="""<p>Dear <b style='color:green'>{}</b> <b style='color:green'>{}</b> <br/>
+			A practitioner account has been successfully set up for you.\nYou will be able to set your login password via the provided email address:  <b style='color:blue'>{}</b> </p>. 
+			</p><p><br/>Once you have logged in, click on the 'Practice' Menu on the left hand of the screen. You will be presented with the following menu buttons and actions you can do:
+			<br/><ul>
+			<li><b style='color:green'>New Consult Ledger</b> - You will be able to record your consults and bills done here</li>
+			<li><b style='color:green'>Consult Ledgers</b> - Here is your list of all bills you have recorded</li>
+			<li><b style='color:green'>Receivables </b>- This is a report tracking your accounts receivables aged for each hospital/facility that owes you.</li>
+			<li><b style='color:green'>Receivables Summary </b>- Just like above but a little summarized</li>
+			<li><b style='color:green'>Ledger Summary </b>- A report of the opening balances, total billed, total paid and closing balances for each hospital/facility.</li>
+			<li><b style='color:green'>Record Payment </b>- You will be able to record every payment received from a hospital/facility and you can pull unpaid invoices against which the payments will be allocated automatically.</li>
+			<li><b style='color:green'>Payments </b>- This is a list of all payment details you have recorded from all the facilities.</li>
+			<li><b style='color:green'>Patient List </b>- The is the Patient Master List. You can add all your patients here. A number of details can be added for each patient.</li>
+			<li><b style='color:green'>Facility List </b>- This is the Facility Master List. Ideally all level 3 and above Facilities in the country have been added. Contact us if you feel a facility is missing.</li>
+			<li><b style='color:green'>Patient Encounters </b>- A list of all patient encounters you have recorded.</li>
+			<li><b style='color:green'>New Patient Encounter </b>- It will allow you to record encounter details about a patient. You can record their history, common presenting complaints, order labs, radiology and prescriptions among other things.</li>
+			</ul>
+			</p>
+			<p>We hope this can help you quickly get you started on Lonius Practice Manager. Enjoy the instant benefits of never staying in the dark about your Practice.<br/> If you have any questions contact us via the email: info@lonius.co.ke.
+			</p><br/><br/>
+			____________________________
+			Lonius Practice Manager - No more blind spots!
+			A product of Lonius Limited""".format(doc.get('first_name').upper(),doc.get('last_name').title(),doc.get('email_address').lower())
+	# frappe.msgprint(f"{message}")
 	alert_practitioner(doc,message)
 def alert_practitioner(doc, message):
 	"""send email with payment link"""
@@ -75,7 +96,7 @@ def make_and_link_user(doc):
 	allowed_modules = ['Workflow', 'Desk', 'Printing', 'Healthcare', 'Practice Manager']
 	for m in get_modules_from_all_apps():
 		if m.get("module_name") not in allowed_modules:
-			self.append('block_modules', {
+			user.append('block_modules', {
 				'module': m.get("module_name") 
 			})
 	user.save(ignore_permissions=True)
