@@ -16,7 +16,7 @@ def get_pricelist_for_customer(customer):
 			'currency': get_defaults().get('currency'),
 			'price_list_name': customer,
 			'selling': 1
-		}).insert()
+		}).insert(ignore_permissions=True)
 		return customer
 
 def update_item_price(customer, item_code, rate):
@@ -35,7 +35,7 @@ def update_item_price(customer, item_code, rate):
 			"currency": currency,
 			"price_list_rate": rate
 		})
-		item_price.insert()
+		item_price.insert(ignore_permissions=True)
 
 def get_item_price(customer, item_code):
 	currency = get_defaults().get('currency')

@@ -21,7 +21,7 @@ def invoice_consult(consult):
 		invoice = frappe.get_doc({
 			"doctype": "Sales Invoice",
 			"status": "Draft",
-			"company": company,
+			"company": consult.get('company'),
 			'due_date': datetime.date.today(),
 			"currency": "KES",
 			"customer": customer,
@@ -34,7 +34,7 @@ def invoice_consult(consult):
 			"rate": consult.get('amount')
 		})
 		invoice.run_method('set_missing_values')
-		invoice.insert()
+		invoice.insert(ignore_permissions=True)
 	else:
 		invoice = frappe.get_doc('Sales Invoice', existing_invoice.get('name'))
 		invoice.append('items', {
@@ -44,7 +44,7 @@ def invoice_consult(consult):
 			"rate": consult.get('amount')
 		})
 		invoice.run_method('set_missing_values')
-		invoice.save()
+		invoice.save(ignore_permissions=True)
 	
 	frappe.msgprint(
 		_("The facility {} has been invoiced for the service.".format(customer)),)
