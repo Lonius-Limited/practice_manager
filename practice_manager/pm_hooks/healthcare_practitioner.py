@@ -12,8 +12,8 @@ def link_user_and_company(doc, state):
 	doc.set('user_id', user.get('name'))
 	doc.save(ignore_permissions=True)
 	message ="""<p>Dear <b style='color:green'>{}</b> <b style='color:green'>{}</b> <br/>
-			A practitioner account has been successfully set up for you.\nYou will be able to set your login password via the provided email address:  <b style='color:blue'>{}</b> </p>. 
-			</p><p><br/>Once you have logged in, click on the 'Practice' Menu on the left hand of the screen. You will be presented with the following menu buttons and actions you can do:
+			A practitioner account has been successfully set up for you.\nYou will be able to set your login password via the provided email address:  <b style='color:blue'>{}. </p> 
+			<p>Once you have logged in, click on the 'Practice' Menu on the left hand of the screen. You will be presented with the following menu buttons and actions you can do:
 			<br/><ul>
 			<li><b style='color:green'>New Consult Ledger</b> - You will be able to record your consults and bills done here</li>
 			<li><b style='color:green'>Consult Ledgers</b> - Here is your list of all bills you have recorded</li>
@@ -29,10 +29,7 @@ def link_user_and_company(doc, state):
 			</ul>
 			</p>
 			<p>We hope this can help you quickly get you started on Lonius Practice Manager. Enjoy the instant benefits of never staying in the dark about your Practice.<br/> If you have any questions contact us via the email: info@lonius.co.ke.
-			</p><br/><br/>
-			____________________________
-			Lonius Practice Manager - No more blind spots!
-			A product of Lonius Limited""".format(doc.get('first_name').upper(),doc.get('last_name').title(),doc.get('email_address').lower())
+			</p><br/><br/>""".format(doc.get('first_name').title(),doc.get('last_name').title(),doc.get('email_address').lower())
 	# frappe.msgprint(f"{message}")
 	alert_practitioner(doc,message)
 def alert_practitioner(doc, message):
