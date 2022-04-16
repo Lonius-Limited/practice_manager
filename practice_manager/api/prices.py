@@ -19,7 +19,7 @@ def get_pricelist_for_customer(customer):
 		}).insert(ignore_permissions=True)
 		return customer
 
-def update_item_price(customer, item_code, rate):
+def update_item_price(customer, item_code, rate, insurance = None):
 	currency = get_defaults().get('currency')
 	price_list = get_pricelist_for_customer(customer)
 	item_price = frappe.db.get_value('Item Price',
@@ -33,15 +33,16 @@ def update_item_price(customer, item_code, rate):
 			"price_list": price_list,
 			"item_code": item_code,
 			"currency": currency,
-			"price_list_rate": rate
+			"price_list_rate": rate,
+			"customer": insurance
 		})
 		item_price.insert(ignore_permissions=True)
 
-def get_item_price(customer, item_code):
+def get_item_price(customer, item_code, insurance=None):
 	currency = get_defaults().get('currency')
 	price_list = get_pricelist_for_customer(customer)
 	item_price = frappe.db.get_value('Item Price',
-		{'item_code': item_code, 'price_list': price_list, 'currency': currency},
+		{'item_code': item_code, 'price_list': price_list, 'currency': currency, 'customer': insurance},
 		['name', 'price_list_rate'], as_dict=1)
 	if item_price and item_price.name:
 		return item_price.price_list_rate
