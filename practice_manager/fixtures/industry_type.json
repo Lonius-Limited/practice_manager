@@ -8,5 +8,15 @@
   "parent": null,
   "parentfield": null,
   "parenttype": null
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Industry Type",
+  "industry": "Insurance",
+  "modified": "2022-04-04 11:28:20.076279",
+  "name": "Insurance",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null
  }
 ]

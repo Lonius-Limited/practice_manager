@@ -1,4 +1,5 @@
 from . import __version__ as app_version
+from os import path as _path
 
 app_name = "practice_manager"
 app_title = "Practice Manager"
@@ -11,11 +12,18 @@ app_license = "MIT"
 
 # Includes in <head>
 # ------------------
+roll_up = [
+#	"/assets/js/practiceutils.min.js"
+]
 
+es_build = [
+	"practiceutils.bundle.js"
+]
+app_include_js = es_build if (_path.exists("/srv/bench/erpnext/apps/frappe/esbuild/esbuild.js") or  _path.exists("/home/erpuser/frappe-bench/apps/frappe/esbuild/esbuild.js") or  _path.exists("/home/frappe/frappe-bench/apps/frappe/esbuild/esbuild.js")) else roll_up
 # include js, css files in header of desk.html
 # app_include_css = "/assets/practice_manager/css/practice_manager.css"
 # app_include_js = "/assets/practice_manager/js/practice_manager.js"
-
+# app_include_js = ['practiceutils.bundle.js']
 # include js, css files in header of web template
 # web_include_css = "/assets/practice_manager/css/practice_manager.css"
 # web_include_js = "/assets/practice_manager/js/practice_manager.js"
