@@ -9,16 +9,19 @@
  "field_order": [
   "billing_date",
   "facility",
+  "payer_type",
+  "insurance",
+  "encounter_type",
   "patient",
   "patient_name",
   "service",
   "service_name",
   "amount",
-  "payer_type",
   "uploads",
   "notes",
   "amended_from",
-  "company"
+  "company",
+  "invoice"
  ],
  "fields": [
   {
@@ -107,12 +110,33 @@
    "fieldtype": "Data",
    "label": "Patient Name",
    "read_only": 1
+  },
+  {
+   "depends_on": "eval: doc.payer_type == 'Corporate';",
+   "fieldname": "insurance",
+   "fieldtype": "Link",
+   "label": "Insurance/Payer",
+   "mandatory_depends_on": "eval: doc.payer_type == 'Corporate';",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "encounter_type",
+   "fieldtype": "Select",
+   "label": "Encounter Type",
+   "options": "Inpatient\nOutpatient",
+   "reqd": 1
+  },
+  {
+   "fieldname": "invoice",
+   "fieldtype": "Link",
+   "label": "Linked Invoice",
+   "options": "Sales Invoice"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2022-04-10 16:42:05.498731",
+ "modified": "2022-04-16 10:46:10.107688",
  "modified_by": "Administrator",
  "module": "Practice Manager",
  "name": "Consult Ledger",
