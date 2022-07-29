@@ -105,14 +105,19 @@ app_include_js = es_build if (_path.exists("/srv/bench/erpnext/apps/frappe/esbui
 
 doc_events = {
 	"Healthcare Practitioner": {
-		"after_insert": "practice_manager.pm_hooks.healthcare_practitioner.link_user_and_company",
+		#"after_insert": "practice_manager.pm_hooks.healthcare_practitioner.link_user_and_company",
 	}
 }
 
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
+scheduler_events = {
+	"cron": {
+		"* * * * *": [
+			"practice_manager.pm_hooks.healthcare_practitioner.process_new_practitioners"
+		]
+	}
 # 	"all": [
 # 		"practice_manager.tasks.all"
 # 	],
@@ -128,7 +133,7 @@ doc_events = {
 # 	"monthly": [
 # 		"practice_manager.tasks.monthly"
 # 	]
-# }
+}
 
 # Testing
 # -------

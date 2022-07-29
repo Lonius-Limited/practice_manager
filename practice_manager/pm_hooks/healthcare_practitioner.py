@@ -5,6 +5,17 @@ def get_company_id():
 	payload = string.ascii_uppercase + "1234567890"
 	abbr1 = random.choices(payload, k=5)
 	return "".join(abbr1)
+
+def process_new_practitioners():
+	new_practitioners = frappe.db.get_list("Healthcare Practitioner", filters={
+        'processed': False
+    },
+	fields=['name'])
+	for practitioner in new_practitioners:
+		practitioner_doc = frappe.get_doc("Healthcare Practitioner", practitioner)
+		link_user_and_company(practitioner_doc, "save")
+		frappe.db.set_value('Healthcare Practitioner', practitioner, 'processed', True)
+
 def link_user_and_company(doc, state):
 	company = make_company(doc)
 	user = make_and_link_user(doc)
@@ -75,6 +86,8 @@ def make_and_link_user(doc):
 		"send_welcome_email": 1,
 		"email": doc.get('email_address'),
 		"first_name": doc.get("first_name"),
+		"middle_name": doc.get("middle_name"),
+		"last_name": doc.get("last_name"),
 		"user_type": "System User",
 	}
 	user = frappe.get_doc(args)
@@ -101,14 +114,15 @@ def make_and_link_user(doc):
 
 
 def add_restrictions(doc, user, company):
-	clear_user_permissions(user, "Company")
-	frappe.get_doc(
-		dict(
-			doctype="User Permission",
-			user=user.get('name'),
-			allow="Company",
-			for_value=company.get('name'),
-			apply_to_all_doctypes=1,
-			# applicable_for="Material Request",
-		)
-	).insert(ignore_permissions=True)
+	# clear_user_permissions(user, "Company")
+	if not frappe.db.exists("User Permission", {"allow": "Company", "user": user.get('name'), "for_value": company.get('name')}):
+		frappe.get_doc(
+			dict(
+				doctype="User Permission",
+				user=user.get('name'),
+				allow="Company",
+				for_value=company.get('name'),
+				apply_to_all_doctypes=1,
+				# applicable_for="Material Request",
+			)
+		).insert(ignore_permissions=True)
