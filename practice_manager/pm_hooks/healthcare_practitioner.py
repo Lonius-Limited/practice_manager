@@ -69,7 +69,7 @@ def make_company(doc):
 	parent_company = pc[0]
 	args = dict(
 		doctype="Company",
-		company_name=doc.get("name"),
+		company_name=doc.get("hospital"),
 		parent_company=parent_company.get("name"),
 		is_group=0,
 		abbr=get_company_id(),
