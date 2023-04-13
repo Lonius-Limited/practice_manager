@@ -1,4 +1,5 @@
 import frappe
+import json
 @frappe.whitelist()
 def cash():
     user = frappe.session.user
@@ -19,4 +20,12 @@ def cash():
     result = frappe.db.sql(f"select COUNT(name) as amount from `tabPatient Encounter` where owner ='{user}' ", as_dict = 1)
     patient_encounters = result[0].get('amount') or 0
 
-    return dict(facilities = facilities, invoices=invoices, payments = payments, patients = patients, patient_encounters = patient_encounters)
+    return dict(facilities = facilities, invoices=invoices, payments = payments, patients = patients, patient_encounters = patient_encounters)pyalo
+
+@frappe.whitelist()
+def submit(payload):
+    data = json.loads(payload)
+    doctype = data.get("doctype")
+    name = data.get("name")
+    doc  = frappe.get_doct(doctype, name)
+    doc.submit()
