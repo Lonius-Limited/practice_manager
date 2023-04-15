@@ -29,3 +29,7 @@ def submit(payload):
     name = data.get("name")
     doc  = frappe.get_doct(doctype, name)
     doc.submit()
+    
+@frappe.whitelist()
+def get_company()
+    return frappe.defaults.get_user_default('company')
