@@ -20,7 +20,7 @@ def cash():
     result = frappe.db.sql(f"select COUNT(name) as amount from `tabPatient Encounter` where owner ='{user}' ", as_dict = 1)
     patient_encounters = result[0].get('amount') or 0
 
-    return dict(facilities = facilities, invoices=invoices, payments = payments, patients = patients, patient_encounters = patient_encounters)pyalo
+    return dict(facilities = facilities, invoices=invoices, payments = payments, patients = patients, patient_encounters = patient_encounters)
 
 @frappe.whitelist()
 def submit(payload):
