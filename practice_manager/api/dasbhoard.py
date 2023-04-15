@@ -31,5 +31,5 @@ def submit(payload):
     doc.submit()
     
 @frappe.whitelist()
-def get_company()
+def get_company():
     return frappe.defaults.get_user_default('company')
