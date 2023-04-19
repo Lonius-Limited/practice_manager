@@ -109,7 +109,12 @@ doc_events = {
 	},
 	"Payment Entry": {
 		"before_save": "practice_manager.api.dasbhoard.payment_entry",
+	},
+	"Sales Invoice": {
+		"before_save": "practice_manager.api.dasbhoard.update_invoice_company",
 	}
+	
+	
 }
 
 # Scheduled Tasks
