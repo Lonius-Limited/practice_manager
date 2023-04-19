@@ -58,6 +58,8 @@ def payment_entry(doc, flag):
         "outstanding_amt_less_than":100000000000000,
         "allocate_payment_amount":1}
     items = get_outstanding_reference_documents(data)
-    doc.references = items
+    if(items):
+        
+        doc.references = items
     
     
