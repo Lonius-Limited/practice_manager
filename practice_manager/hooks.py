@@ -106,6 +106,9 @@ app_include_js = es_build if (_path.exists("/srv/bench/erpnext/apps/frappe/esbui
 doc_events = {
 	"Healthcare Practitioner": {
 		#"after_insert": "practice_manager.pm_hooks.healthcare_practitioner.link_user_and_company",
+	},
+	"Payment Entry": {
+		"before_save": "practice_manager.api.dasbhoard.payment_entry",
 	}
 }
 
