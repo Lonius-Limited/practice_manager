@@ -34,11 +34,12 @@ def submit(payload):
 
 @frappe.whitelist()
 def get_company():
-    return frappe.defaults.get_user_default('company')
+    user = frappe.session.user
+    return  frappe.db.get_value("Healthcare Pratitioner", dict(email=user), "hospital")
 
 def payment_entry(doc, flag):
     customer = doc.party
-    company = frappe.defaults.get_user_default('company')
+    company = get_company()
     data = {"company":company,
         "party_type":"Customer",
         "payment_type":"Receive",
