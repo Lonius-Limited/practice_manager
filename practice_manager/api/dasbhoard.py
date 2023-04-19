@@ -40,6 +40,7 @@ def get_company(owner= None):
 def update_invoice_company(doc, flag):
     doc.company = get_company()
     doc.debit_to = frappe.db.get_value("Company", doc.company, "default_receivable_account")
+    
 
 def payment_entry(doc, flag):
     customer = doc.party
