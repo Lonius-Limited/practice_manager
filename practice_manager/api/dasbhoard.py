@@ -1,5 +1,6 @@
 import frappe
 import json
+from erpnext.accounts.doctype.payment_entry.payment_entry import get_outstanding_reference_documents
 @frappe.whitelist()
 def cash():
     user = frappe.session.user
@@ -34,3 +35,18 @@ def submit(payload):
 @frappe.whitelist()
 def get_company():
     return frappe.defaults.get_user_default('company')
+
+def payment_entry(doc, flag):
+    customer = doc.party
+    company = frappe.defaults.get_user_default('company')
+    data = {"company":company,
+        "party_type":"Customer",
+        "payment_type":"Receive",
+        "party":customer,
+        "outstanding_amt_greater_than":0,
+        "outstanding_amt_less_than":100000000000000,
+        "allocate_payment_amount":1}
+    items = get_outstanding_reference_documents(data)
+    doc.references = items
+    
+    
