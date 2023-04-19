@@ -33,9 +33,12 @@ def submit(payload):
   
 
 @frappe.whitelist()
-def get_company():
-    user = frappe.session.user
+def get_company(owner= None):
+    user =  owner or frappe.session.user
     return  frappe.db.get_value("Healthcare Pratitioner", dict(email=user), "hospital")
+
+def update_invoice_company(doc, flag):
+    doc.company = get_company()
 
 def payment_entry(doc, flag):
     customer = doc.party
