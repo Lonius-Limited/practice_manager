@@ -46,8 +46,9 @@ def update_invoice_company(doc, flag):
 
 def payment_entry(doc, flag):
     customer = doc.party
-    company = get_company()
-    debit_to = frappe.db.get_value("Company", company, "default_receivable_account")
+    company = doc.company
+    debit_to = frappe.db.get_value("Company", doc.company, "default_receivable_account")
+    frappe.msgprint(company + "  "+ debit_to)
     data = {"company":company,
         "party_type":"Customer",
         "payment_type":"Receive",   
