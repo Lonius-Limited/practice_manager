@@ -45,8 +45,9 @@ def payment_entry(doc, flag):
     company = get_company()
     data = {"company":company,
         "party_type":"Customer",
-        "payment_type":"Receive",
+        "payment_type":"Receive",   
         "party":customer,
+         "party_account":"1310 - Debtors - LL",
         "outstanding_amt_greater_than":0,
         "outstanding_amt_less_than":100000000000000,
         "allocate_payment_amount":1}
