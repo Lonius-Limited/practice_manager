@@ -23,11 +23,12 @@ def invoice_consult(consult):
 	else:
 		narrative = consult.get('service_name') + ' - ' + consult.get('patient_name') + ' (' + consult.get('payer_type') + ' | ' + consult.get('insurance') + ')'
 	if not existing_invoice or not existing_invoice.get('status') == 'Draft':
+		from datetime import date, timedelta
 		invoice = frappe.get_doc({
 			"doctype": "Sales Invoice",
 			"status": "Draft",
 			"company": consult.get('company'),
-			'due_date': datetime.date.today(),
+			'due_date': (date.today()+timedelta(days=30)),
 			"currency": "KES",
 			"customer": customer,
 			"patient": patient,
